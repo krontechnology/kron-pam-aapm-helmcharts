@@ -1,0 +1,66 @@
+replicaCount: 1
+
+image:
+  repository: krontechnology/aapm-service
+  pullPolicy: IfNotPresent
+  tag: "0.0.1"
+
+imagePullSecrets: []
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  create: true
+  automount: true
+  annotations: {}
+  name: "as-service-account"
+
+podAnnotations: {}
+podLabels:
+  kron.aapm.service: vault
+
+role:
+  name: "aapm-service-access"
+  bindingName: "bind-aapm-service-access"
+
+podSecurityContext: {} # fsGroup: 2000
+
+securityContext: {}
+
+namespace:
+  name: aapm
+
+env:
+- name: AGENT_SERVICE
+  value: "10.20.42.19"
+- name: AGENT_PORT
+  value: "6396"
+- name: DIRECT_ACCESS_URL
+  value: "https://10.20.42.31"
+
+service:
+  type: NodePort
+  port: 1002
+  targetPort: 8002
+  name: aapm-service
+
+access:
+  key: default
+
+resources: {}
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+
+volumes: []
+
+volumeMounts: []
+
+nodeSelector: {}
+
+tolerations: []
+
+affinity: {}
