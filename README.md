@@ -1,4 +1,5 @@
 # kron-aapm-charts
 
-1. Package chart
-2. 
+1. Aapm Chart
+2. Aapm Service
+3. Aapm Sidecar
