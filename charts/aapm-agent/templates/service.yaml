@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.service.name }}
+  labels:
+    run: {{ include "kron-aapm-agent.fullname" . }}	
+        
+spec:
+        ports:
+                - port: {{ .Values.service.port }}
+                  protocol: TCP
+        selector:
+                app: {{ include "kron-aapm-agent.fullname" . }}
+                
+        type: {{ .Values.service.type }}
+        sessionAffinity: None
+        externalTrafficPolicy: {{ .Values.service.externalTrafficPolicy }}
+        ipFamilyPolicy: {{ .Values.service.ipFamilyPolicy }}
+        internalTrafficPolicy: {{ .Values.service.internalTrafficPolicy }}

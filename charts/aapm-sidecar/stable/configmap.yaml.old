@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: aapm-sidecar-injector
+  labels:
+    app: aapm-sidecar-injector
+data:
+  sidecarconfig.yaml: |
+    containers:
+    - name: aapm-client 
+      image: kron/aapm-client:1.1.0
+      imagePullPolicy: IfNotPresent
+      volumeMounts:
+      - name: secrets 
+        mountPath: /secrets
+    volumes:
+    - name: secrets 
+      configMap:
+        name: aapm-configmap

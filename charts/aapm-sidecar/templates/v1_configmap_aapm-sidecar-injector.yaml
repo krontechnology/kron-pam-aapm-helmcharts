@@ -1,0 +1,9 @@
+apiVersion: v1
+data:
+  sidecarconfig.yaml: "containers:\n- name: aapm-client \n  image: krontechnology/aapm-client:1.1.0\n  imagePullPolicy: IfNotPresent\n  volumeMounts:\n   - name: keystore \n     mountPath: /keystore\nvolumes:\n   - name: keystore\n     configMap:\n            name: aapm-configmap\n"
+kind: ConfigMap
+metadata:
+  labels:
+    app: aapm-sidecar-injector
+  name: aapm-sidecar-injector
+  namespace: aapm

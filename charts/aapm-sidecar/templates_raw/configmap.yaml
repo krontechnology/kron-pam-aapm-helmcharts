@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ include "kron-aapm-sidecar.fullname" . }}
+  labels:
+    app: {{ include "kron-aapm-sidecar.fullname" . }}
+data:
+  sidecarconfig.yaml: |
+    containers:
+    - name: {{ .Values.sidecarImage.name }}
+      image: "{{ .Values.sidecarImage.repository }}:{{ .Values.sidecarImage.tag | default .Chart.AppVersion }}"
+      imagePullPolicy: {{ .Values.sidecarImage.pullPolicy }}
+      volumeMounts:
+       - name: {{ .Values.volumeMounts.name }} 
+         mountPath: {{ .Values.volumeMounts.path }} 
+    volumes:
+       - name: {{ .Values.volumeMounts.name }}
+         configMap:
+                name: {{ .Values.configMap.name }}
