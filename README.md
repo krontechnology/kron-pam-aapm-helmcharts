@@ -1,6 +1,11 @@
 # kron-pam-aapm-helmcharts
 It contains the source code for the kubernetes `Helm Chart`s that can make requests to the Vault password vault defined in the Kron PAM product developed by the Kron company
 
+# Adding Repo
+```
+helm repo add kron-pam https://krontechnology.github.io/kron-pam-aapm-helmcharts/
+```
+
 
 # Installation
 
@@ -37,7 +42,7 @@ kubectl create secret generic kron-pam-aapm-secret --from-file=keystore.p12=keys
 
 4. install agent 
 ```
-helm install kron-pam-aapm-agent charts/aapm-agent \
+helm install kron-pam-aapm-agent kron-pam/kron-aapm-agent \
   --namespace kron-pam-aapm \
   --create-namespace \
   --set secrets.installToken="d7d...608e" \
@@ -46,7 +51,7 @@ helm install kron-pam-aapm-agent charts/aapm-agent \
 5. install service
   - with ssl:
     ```
-    helm install kron-pam-aapm-service charts/aapm-service \
+    helm install kron-pam-aapm-service kron-pam/kron-aapm-service \
     --namespace kron-pam-aapm \
     --set tls.enabled=true \
     --set tls.password="topsecret" \
@@ -54,7 +59,7 @@ helm install kron-pam-aapm-agent charts/aapm-agent \
     ```
   - no ssl:
     ```
-    helm install kron-pam-aapm-service charts/aapm-service \
+    helm install kron-pam-aapm-service kron-pam/kron-aapm-service \
     --namespace kron-pam-aapm
     ```
     ### Note: 
