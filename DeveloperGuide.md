@@ -17,7 +17,7 @@
 3. Create index
 ```shell
 cd docs
-helm repo index . --url https://krontechnology.github.io/kron-aapm-charts/
+helm repo index . --url https://krontechnology.github.io/kron-pam-aapm-helmcharts/
 ```
 
 ### Adding New Chart
