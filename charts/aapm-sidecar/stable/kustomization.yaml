@@ -1,0 +1,22 @@
+namespace: aapm
+
+resources:
+- namespace.yaml
+- clusterrole.yaml
+- clusterrolebinding.yaml
+- deployment.yaml
+- service.yaml
+- serviceaccount.yaml
+- configmap.yaml
+- aapm-configmap.yaml
+
+images:
+- name: aapm-sidecar-injector
+  newName: aapm-sidecar-injector
+  newTag: latest
+- name: sidecar-injector
+  newName: krontechnology/aapm-sidecar-injector
+  newTag: latest
+
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization

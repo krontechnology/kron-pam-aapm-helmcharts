@@ -1,0 +1,14 @@
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    app: aapm-sidecar-injector
+  name: aapm-sidecar-injector
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: aapm-sidecar-injector
+subjects:
+- kind: ServiceAccount
+  name: aapm-sidecar-injector
+  namespace: aapm

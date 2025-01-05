@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: aapm-sidecar-injector
+  labels:
+    app: aapm-sidecar-injector
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: aapm-sidecar-injector
+  template:
+    metadata:
+      labels:
+        app: aapm-sidecar-injector
+    spec:
+      serviceAccountName: aapm-sidecar-injector
+      containers:
+        - name: aapm-sidecar-injector
+          image: krontechnology/aapm-sidecar-injector:1.1.0
+          imagePullPolicy: IfNotPresent 
+          args:
+          - -service-name=aapm-sidecar-injector
+          - -sidecar-config-file=/etc/webhook/config/sidecarconfig.yaml
+          env:
+          - name: POD_NAMESPACE
+            valueFrom:
+              fieldRef:
+                fieldPath: metadata.namespace
+          lifecycle:
+            preStop:
+              exec:
+                command: ["/bin/sh", "-c", "/prestop.sh"]
+          volumeMounts:
+          - name: webhook-config
+            mountPath: /etc/webhook/config
+      volumes:
+      - name: webhook-config
+        configMap:
+          name: aapm-sidecar-injector

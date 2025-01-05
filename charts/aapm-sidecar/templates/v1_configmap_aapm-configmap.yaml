@@ -1,0 +1,8 @@
+apiVersion: v1
+data:
+  aapm.conf: |
+    worker_processes  1;
+kind: ConfigMap
+metadata:
+  name: aapm-configmap
+  namespace: aapm
