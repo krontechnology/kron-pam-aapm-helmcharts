@@ -21,9 +21,6 @@ imagePullSecrets: []
 nameOverride: ""
 fullnameOverride: ""
 
-namespace:
-  name: aapm
-
 serviceAccount:
   # Specifies whether a service account should be created
   create: true
@@ -44,8 +41,7 @@ configMap:
 
 podAnnotations: {}
 
-podSecurityContext: {}
-  # fsGroup: 2000
+podSecurityContext: {} # fsGroup: 2000
 
 securityContext: {}
   # capabilities:

@@ -12,7 +12,7 @@
 ```shell
   mv kron-aapm-agent-1.1.1.tgz docs
   mv kron-aapm-service-0.1.0.tgz docs
-  mv kron-aapm-sidecar-1.1.0.tgz docs 
+  mv kron-aapm-sidecar-1.1.1.tgz docs 
 ```
 3. Create index
 ```shell
