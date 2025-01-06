@@ -37,7 +37,7 @@ kubectl create namespace kron-pam-aapm
 
 3. create secret in namespace (Optional)
 ```
-kubectl create secret generic kron-pam-aapm-secret --from-file=keystore.p12=keystore.p12 -n kron-pam-aapm
+kubectl create secret generic kron-pam-aapm-secret --from-file=keystore.p12=./keystore.p12 -n kron-pam-aapm
 ```
 
 4. install agent 

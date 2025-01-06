@@ -3,9 +3,9 @@ entries:
   kron-aapm-agent:
   - apiVersion: v2
     appVersion: 1.1.0
-    created: "2025-01-06T00:31:40.349418+03:00"
+    created: "2025-01-06T14:44:16.056053+03:00"
     description: Kron Aapm Agent for Kubernetes
-    digest: ececb77e97e6bf50ca3665d2ea23c63c69e96dd5080ec598bf02274fe52242ba
+    digest: b6c451bf45831beaae6dfe4965a6fec22ad32e7dd9bda583193e4c7e1c037369
     name: kron-aapm-agent
     type: application
     urls:
@@ -14,7 +14,7 @@ entries:
   kron-aapm-service:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2025-01-06T00:31:40.349773+03:00"
+    created: "2025-01-06T14:44:16.056523+03:00"
     description: A Helm chart for Kubernetes
     digest: 643a1dbe94c721ffcf0ae1bba4c1f9fb0316e86a8856d9485e3fc66d9a87aa8e
     name: kron-aapm-service
@@ -25,7 +25,7 @@ entries:
   kron-aapm-sidecar:
   - apiVersion: v2
     appVersion: 1.1.0
-    created: "2025-01-06T00:31:40.350057+03:00"
+    created: "2025-01-06T14:44:16.056857+03:00"
     description: Kron Aapm sidecar for Kubernetes
     digest: 7e7fe036b93e808c50f7b90029fee276c707454e7bb1e8a9263454393b4600a8
     name: kron-aapm-sidecar
@@ -33,4 +33,4 @@ entries:
     urls:
     - https://krontechnology.github.io/kron-pam-aapm-helmcharts/kron-aapm-sidecar-1.1.1.tgz
     version: 1.1.1
-generated: "2025-01-06T00:31:40.348419+03:00"
+generated: "2025-01-06T14:44:16.055275+03:00"
