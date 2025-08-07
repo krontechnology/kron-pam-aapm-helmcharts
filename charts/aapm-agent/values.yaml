@@ -8,7 +8,7 @@ image:
   repository: krontechnology/aapm-agent
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "1.1.1"
+  tag: "1.1.2"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -27,8 +27,13 @@ secrets:
   name: aapm-agent-secrets
   type: Opaque
   connection: aHR0cHM=
-  installToken: c2b43e9f-d71d-42c7-b864-ef05009ef9a2
-  address: 10.20.42.45
+  installToken: c2b43e..
+  address: 127.0.0.1
+
+checkPeriod:
+  regular: 60
+  intensive: 5
+  bufferInSeconds: 60
 
 container:
   port: 8080

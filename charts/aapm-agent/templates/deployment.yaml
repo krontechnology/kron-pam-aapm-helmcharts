@@ -41,6 +41,14 @@ spec:
                 secretKeyRef:
                   key:  address
                   name: {{ .Values.secrets.name }}
+
+            - name: password.statusCheck.period.regular
+              value: {{ .Values.checkPeriod.regular }}
+            - name: password.statusCheck.period.intensive
+              value: {{ .Values.checkPeriod.intensive }}
+            - name: password.statusCheck.period.bufferInSeconds
+              value: {{ .Values.checkPeriod.bufferInSeconds }}
+
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
