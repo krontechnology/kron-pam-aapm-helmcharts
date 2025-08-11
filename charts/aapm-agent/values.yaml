@@ -8,7 +8,7 @@ image:
   repository: krontechnology/aapm-agent
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "1.1.2"
+  tag: "1.1.1"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -29,6 +29,8 @@ secrets:
   connection: aHR0cHM=
   installToken: c2b43e..
   address: 127.0.0.1
+  agentName: kron-aapm-agent-on-kubernetes
+  encryptionKey: your-encryption-key
 
 checkPeriod:
   regular: 60

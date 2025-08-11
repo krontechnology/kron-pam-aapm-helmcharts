@@ -48,6 +48,10 @@ spec:
               value: {{ .Values.checkPeriod.intensive }}
             - name: password.statusCheck.period.bufferInSeconds
               value: {{ .Values.checkPeriod.bufferInSeconds }}
+            - name: singleconnect.agentName
+              value: {{ .Values.secrets.agentName }}
+            - name: singleconnect.encryptionKey
+              value: {{ .Values.secrets.encryptionKey }}
 
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
