@@ -43,15 +43,15 @@ spec:
                   name: {{ .Values.secrets.name }}
 
             - name: password.statusCheck.period.regular
-              value: {{ .Values.checkPeriod.regular }}
+              value: "{{ .Values.checkPeriod.regular }}"
             - name: password.statusCheck.period.intensive
-              value: {{ .Values.checkPeriod.intensive }}
+              value: "{{ .Values.checkPeriod.intensive }}"
             - name: password.statusCheck.period.bufferInSeconds
-              value: {{ .Values.checkPeriod.bufferInSeconds }}
+              value: "{{ .Values.checkPeriod.bufferInSeconds }}"
             - name: singleconnect.agentName
-              value: {{ .Values.secrets.agentName }}
+              value: "{{ .Values.secrets.agentName }}"
             - name: singleconnect.encryptionKey
-              value: {{ .Values.secrets.encryptionKey }}
+              value: "{{ .Values.secrets.encryptionKey }}"
 
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
