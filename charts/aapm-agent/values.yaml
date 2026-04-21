@@ -8,7 +8,7 @@ image:
   repository: krontechnology/aapm-agent
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "1.2.0"
+  tag: "1.8.3"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -27,15 +27,36 @@ secrets:
   name: aapm-agent-secrets
   type: Opaque
   connection: aHR0cHM=
-  installToken: c2b43e..
-  address: 127.0.0.1
-  agentName: kron-aapm-agent-on-kubernetes
-  encryptionKey: your-encryption-key
+  installToken: c2b43e9f-d71d-42c7-b864-ef05009ef9a2
+  address: 10.20.42.45
+  failoverAddress: ""
+  keystorePassword: ""
 
-checkPeriod:
-  regular: 60
-  intensive: 5
-  bufferInSeconds: 60
+config:
+  grpc:
+    port: 8080
+  singleconnect:
+    protocol: "https"
+    agentName: "default-agent"
+    sslIgnored: false
+    hostnameIgnored: false
+  password:
+    statusCheck:
+      regular: 60
+      intensive: 5
+      bufferInSeconds: 60
+      graceInMinutes: 0
+  tools:
+    authentication: false
+  system:
+    serviceMode: false
+  app:
+    ipAddress: "8.8.8.8"
+    grpc:
+      security:
+        enabled: true
+        protocols: "TLSv1.2,TLSv1.3"
+        ciphers: "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
 
 container:
   port: 8080
@@ -53,15 +74,11 @@ securityContext: {}
   # runAsUser: 1000
 
 service:
-  name: "kron-pam-agent-service"
   type: NodePort
   port: 8080
   externalTrafficPolicy: Cluster
   internalTrafficPolicy: Cluster
   ipFamilyPolicy: SingleStack
-
-deployment:
-  name: "kron-pam-agent"
 
 resources: {}
   # We usually recommend not to specify default resources and to leave this as a conscious

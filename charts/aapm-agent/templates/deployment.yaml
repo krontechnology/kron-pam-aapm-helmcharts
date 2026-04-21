@@ -1,7 +1,8 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.deployment.name }}
+  name: {{ include "kron-aapm-agent.fullname" . }}
+  namespace: {{ .Release.Namespace }}
   labels:
     app: {{ include "kron-aapm-agent.fullname" . }}
 spec:
@@ -30,29 +31,57 @@ spec:
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - containerPort: {{ .Values.container.port }}
-          env:          
-            - name: singleconnect.installToken
+          env:
+            - name: SINGLECONNECT_INSTALLTOKEN
               valueFrom:
                 secretKeyRef:
-                  key:  installToken
+                  key: installToken
                   name: {{ .Values.secrets.name }}
-            - name: singleconnect.address
+            - name: PAM_ADDRESS
               valueFrom:
                 secretKeyRef:
-                  key:  address
+                  key: address
                   name: {{ .Values.secrets.name }}
-
-            - name: password.statusCheck.period.regular
-              value: "{{ .Values.checkPeriod.regular }}"
-            - name: password.statusCheck.period.intensive
-              value: "{{ .Values.checkPeriod.intensive }}"
-            - name: password.statusCheck.period.bufferInSeconds
-              value: "{{ .Values.checkPeriod.bufferInSeconds }}"
-            - name: singleconnect.agentName
-              value: "{{ .Values.secrets.agentName }}"
-            - name: singleconnect.encryptionKey
-              value: "{{ .Values.secrets.encryptionKey }}"
-
+            - name: PAM_FAILOVER_ADDRESS
+              valueFrom:
+                secretKeyRef:
+                  key: failoverAddress
+                  name: {{ .Values.secrets.name }}
+            - name: SINGLECONNECT_KEYSTORE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  key: keystorePassword
+                  name: {{ .Values.secrets.name }}
+            - name: GRPC_PORT
+              value: {{ .Values.config.grpc.port | quote }}
+            - name: SINGLECONNECT_PROTOCOL
+              value: {{ .Values.config.singleconnect.protocol | quote }}
+            - name: AGENT_NAME
+              value: {{ .Values.config.singleconnect.agentName | quote }}
+            - name: HTTP_SSL_IGNORED
+              value: {{ .Values.config.singleconnect.sslIgnored | quote }}
+            - name: HTTP_HOSTNAME_IGNORED
+              value: {{ .Values.config.singleconnect.hostnameIgnored | quote }}
+            - name: PASSWORD_CHECK_PERIOD_REGULAR
+              value: {{ .Values.config.password.statusCheck.regular | quote }}
+            - name: PASSWORD_CHECK_PERIOD_INTENSIVE
+              value: {{ .Values.config.password.statusCheck.intensive | quote }}
+            - name: PASSWORD_CHECK_PERIOD_BUFFER
+              value: {{ .Values.config.password.statusCheck.bufferInSeconds | quote }}
+            - name: PASSWORD_CHECK_PERIOD_GRACE
+              value: {{ .Values.config.password.statusCheck.graceInMinutes | quote }}
+            - name: TOOLS_AUTHENTICATION
+              value: {{ .Values.config.tools.authentication | quote }}
+            - name: SYSTEM_SERVICE_MODE
+              value: {{ .Values.config.system.serviceMode | quote }}
+            - name: APP_IP_ADDRESS
+              value: {{ .Values.config.app.ipAddress | quote }}
+            - name: GRPC_SECURITY_ENABLED
+              value: {{ .Values.config.app.grpc.security.enabled | quote }}
+            - name: GRPC_TLS_PROTOCOLS
+              value: {{ .Values.config.app.grpc.security.protocols | quote }}
+            - name: GRPC_TLS_CIPHERS
+              value: {{ .Values.config.app.grpc.security.ciphers | quote }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

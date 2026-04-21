@@ -1,36 +1,36 @@
 apiVersion: v1
 entries:
+  aapm-service:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2026-04-21T12:09:35.255153+03:00"
+    description: Aapm Service Helm Chart for Kubernetes
+    digest: 993cf7eaf477d1a7b68b67c3d2c9f87a8c8e2a74f26b60432278ee43c6c53d5f
+    name: aapm-service
+    type: application
+    urls:
+    - https://krontechnology.github.io/kron-aapm-charts/aapm-service-1.2.1.tgz
+    version: 1.2.1
   kron-aapm-agent:
   - apiVersion: v2
-    appVersion: 1.1.0
-    created: "2025-08-15T14:03:55.282298+03:00"
+    appVersion: 1.8.3
+    created: "2026-04-21T12:09:35.255499+03:00"
     description: Kron Aapm Agent for Kubernetes
-    digest: d71ba09b31ec27b69f29c28ffe70dd9d65d9dd5101e7f0768bdb46669f1b7da0
+    digest: d3fb3330e9fc07188c1bb3b2e23d3a8f1f9443d79e9e94b2afe36083583e735a
     name: kron-aapm-agent
     type: application
     urls:
-    - https://krontechnology.github.io/kron-pam-aapm-helmcharts/kron-aapm-agent-1.2.0.tgz
-    version: 1.2.0
-  kron-aapm-service:
-  - apiVersion: v2
-    appVersion: 1.16.0
-    created: "2025-08-15T14:03:55.282583+03:00"
-    description: A Helm chart for Kubernetes
-    digest: 643a1dbe94c721ffcf0ae1bba4c1f9fb0316e86a8856d9485e3fc66d9a87aa8e
-    name: kron-aapm-service
-    type: application
-    urls:
-    - https://krontechnology.github.io/kron-pam-aapm-helmcharts/kron-aapm-service-0.1.0.tgz
-    version: 0.1.0
+    - https://krontechnology.github.io/kron-aapm-charts/kron-aapm-agent-1.8.3.tgz
+    version: 1.8.3
   kron-aapm-sidecar:
   - apiVersion: v2
     appVersion: 1.1.0
-    created: "2025-08-15T14:03:55.282916+03:00"
+    created: "2026-04-21T12:09:35.255831+03:00"
     description: Kron Aapm sidecar for Kubernetes
-    digest: 7e7fe036b93e808c50f7b90029fee276c707454e7bb1e8a9263454393b4600a8
+    digest: 215636eef4f0aae259374f8abfd9b655a99be916608684bd1bfd9ad54e4e4fab
     name: kron-aapm-sidecar
     type: application
     urls:
-    - https://krontechnology.github.io/kron-pam-aapm-helmcharts/kron-aapm-sidecar-1.1.1.tgz
-    version: 1.1.1
-generated: "2025-08-15T14:03:55.281482+03:00"
+    - https://krontechnology.github.io/kron-aapm-charts/kron-aapm-sidecar-1.2.1.tgz
+    version: 1.2.1
+generated: "2026-04-21T12:09:35.254331+03:00"

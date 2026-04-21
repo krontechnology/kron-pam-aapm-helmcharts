@@ -1,17 +1,17 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Values.deployment.name }}
-  namespace: {{ .Release.namespace }}
+  name: {{ include "aapm-service.fullname" . }}
+  namespace: {{ .Release.Namespace }}
   labels:
-    {{- include "kron-aapm-service.labels" . | nindent 4 }}
+    {{- include "aapm-service.labels" . | nindent 4 }}
 spec:
   {{- if not .Values.autoscaling.enabled }}
   replicas: {{ .Values.replicaCount }}
   {{- end }}
   selector:
     matchLabels:
-      {{- include "kron-aapm-service.selectorLabels" . | nindent 6 }}
+      {{- include "aapm-service.selectorLabels" . | nindent 6 }}
   template:
     metadata:
       {{- with .Values.podAnnotations }}
@@ -19,7 +19,7 @@ spec:
         {{- toYaml . | nindent 8 }}
       {{- end }}
       labels:
-        {{- include "kron-aapm-service.labels" . | nindent 8 }}
+        {{- include "aapm-service.labels" . | nindent 8 }}
         {{- with .Values.podLabels }}
         {{- toYaml . | nindent 8 }}
         {{- end }}
@@ -28,7 +28,7 @@ spec:
       imagePullSecrets:
         {{- toYaml . | nindent 8 }}
       {{- end }}
-      serviceAccountName: {{ include "kron-aapm-service.serviceAccountName" . }}
+      serviceAccountName: {{ include "aapm-service.serviceAccountName" . }}
       securityContext:
         {{- toYaml .Values.podSecurityContext | nindent 8 }}
       containers:
@@ -38,46 +38,63 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           env:
-          {{- if .Values.tls.enabled }}
-          - name: SSL_ENABLED
-            value: "true"
-          {{- else }}
-          - name: SSL_ENABLED
-            value: "false"
-          {{- end }}
-          - name: KEYSTORE_PASSWORD
-            value: {{ .Values.tls.password }}
-          - name: KEYSTORE_ALIAS
-            value: {{ .Values.tls.alias }}
-          - name: AGENT_SERVICE
-            value: {{ .Values.agent.service }}
-          - name: AGENT_PORT
-            value: "{{ .Values.agent.port }}"
-          - name: DIRECT_ACCESS_URL
-            valueFrom:
-              secretKeyRef:
-                name: aapm-agent-secrets
-                key: address
-          - name: PAM_URL
-            value: {{ .Values.pam.url }}
+            - name: AGENT_SERVICE
+              value: {{ .Values.agent.service | quote }}
+            - name: AGENT_PORT
+              value: {{ .Values.agent.port | quote }}
+            - name: DIRECT_ACCESS_URL
+              value: {{ .Values.pam.url | quote }}
+            - name: SSL_ENABLED
+              value: {{ .Values.tls.enabled | quote }}
+            - name: KEYSTORE_PATH
+              value: {{ .Values.tls.keystorePath | quote }}
+            - name: KEYSTORE_PASSWORD
+              value: {{ .Values.tls.password | quote }}
+            - name: KEYSTORE_ALIAS
+              value: {{ .Values.tls.keyAlias | quote }}
+            - name: DISABLE_AGENT_SECURE_CHANNEL
+              value: {{ .Values.agent.disableSecureChannel | quote }}
+            - name: IGNORE_AGENT_CERTIFICATE
+              value: {{ .Values.agent.ignoreCertificate | quote }}
+            - name: DISABLE_INTERCEPTOR_SECURE_REQUEST
+              value: {{ .Values.interceptor.disableSecureRequest | quote }}
+            - name: IGNORE_INTERCEPTOR_CERTIFICATE
+              value: {{ .Values.interceptor.ignoreCertificate | quote }}
+            - name: KEYSTORE_DIR
+              value: {{ .Values.client.keystoreDir | quote }}
+            {{- range $i, $user := .Values.client.users }}
+            - name: AAPM_CLIENT_SECRETS_{{ $i }}_USER_LABEL
+              value: {{ $user.label | quote }}
+            - name: AAPM_CLIENT_SECRETS_{{ $i }}_ACC_PATH
+              value: {{ $user.accPath | quote }}
+            - name: AAPM_CLIENT_SECRETS_{{ $i }}_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $.Values.clientCredentials.secretName }}
+                  key: {{ $user.secretKey }}
+            - name: AAPM_CLIENT_SECRETS_{{ $i }}_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $.Values.clientCredentials.secretName }}
+                  key: {{ $user.tokenKey }}
+            {{- end }}
           ports:
             - name: http
-              containerPort: {{ .Values.service.port }}
+              containerPort: {{ .Values.service.targetPort }}
               protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
           {{- if .Values.tls.enabled }}
-          {{- with .Values.volumeMounts }}
           volumeMounts:
-            {{- toYaml . | nindent 12 }}
+            - name: tls-keystore
+              mountPath: /etc/tls
+              subPath: keystore.p12
           {{- end }}
-          {{- end }}
-
       {{- if .Values.tls.enabled }}
-      {{- with .Values.volumes }}
       volumes:
-        {{- toYaml . | nindent 8 }}
-      {{- end }}
+        - name: tls-keystore
+          secret:
+            secretName: {{ .Values.tls.secretName }}
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:

@@ -8,13 +8,13 @@ image:
   repository: krontechnology/aapm-sidecar-injector
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "1.1.0"
+  tag: "1.2.1"
 
 sidecarImage:
   repository: krontechnology/aapm-client
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "1.1.0"
+  tag: "1.2.1"
   name: "aapm-client"
 
 imagePullSecrets: []
@@ -38,6 +38,28 @@ clusterRoleBinding:
 
 configMap:
   name: "aapm-configmap"
+
+# AAPM agent connection parameters — stored in a K8s Secret and injected as env vars.
+aapmConnection:
+  agentService: ""       # e.g. "aapm-agent.aapm.svc.cluster.local"
+  agentPort: 443
+  directAccessUrl: ""    # e.g. "https://aapm.example.com"
+
+# Secret account definitions fetched by AapmClient and written to /keystore.
+# Stored in a K8s Secret and loaded as a Spring config file (application-aapm-client.yml).
+aapmClient:
+  pollIntervalMs: 30000
+  secrets: []
+  # - userLabel: "db-user"
+  #   secret: "database_account"
+  #   token: "auth-token-value"
+  #   accPath: "/prod/database"
+
+# Content mounted into the AAPM sidecar container at /keystore/aapm.conf.
+aapmConfig:
+  content: |
+    # AAPM client configuration
+    # Add connection and authentication settings here
 
 podAnnotations: {}
 

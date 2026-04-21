@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: {{ include "kron-aapm-sidecar.fullname" . }}
+  namespace: {{ .Values.namespace.name }}
   labels:
     app: {{ include "kron-aapm-sidecar.fullname" . }}
 spec:
@@ -22,7 +23,7 @@ spec:
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           args:
-          - -service-name=aapm-sidecar-injector
+          - -service-name={{ include "kron-aapm-sidecar.fullname" . }}
           - -sidecar-config-file=/etc/webhook/config/sidecarconfig.yaml
           env:
           - name: POD_NAMESPACE
@@ -36,8 +37,21 @@ spec:
           volumeMounts:
           - name: webhook-config
             mountPath: /etc/webhook/config
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
       volumes:
       - name: webhook-config
         configMap:
-          name: aapm-sidecar-injector
-
+          name: {{ include "kron-aapm-sidecar.fullname" . }}
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
