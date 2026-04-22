@@ -36,6 +36,10 @@ clusterRole:
 clusterRoleBinding:
   name: "aapm-sidecar-injector"
 
+namespace:
+  name: ""
+  create: false
+
 configMap:
   name: "aapm-configmap"
 
@@ -44,16 +48,15 @@ aapmConnection:
   agentService: ""       # e.g. "aapm-agent.aapm.svc.cluster.local"
   agentPort: 443
   directAccessUrl: ""    # e.g. "https://aapm.example.com"
+  disableSecureChannel: false
+  ignoreCertificate: false
+  disableInterceptorSecureRequest: false
+  ignoreInterceptorCertificate: false
 
-# Secret account definitions fetched by AapmClient and written to /keystore.
-# Stored in a K8s Secret and loaded as a Spring config file (application-aapm-client.yml).
+# Default poll interval for the sidecar (ms).
+# Account definitions are configured per target namespace via aapm-client-secret.
 aapmClient:
   pollIntervalMs: 30000
-  secrets: []
-  # - userLabel: "db-user"
-  #   secret: "database_account"
-  #   token: "auth-token-value"
-  #   accPath: "/prod/database"
 
 # Content mounted into the AAPM sidecar container at /keystore/aapm.conf.
 aapmConfig:

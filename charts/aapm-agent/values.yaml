@@ -50,6 +50,7 @@ config:
     authentication: false
   system:
     serviceMode: false
+  machineId: "agent-docker"
   app:
     ipAddress: "8.8.8.8"
     grpc:
@@ -107,3 +108,13 @@ nodeSelector: {}
 tolerations: []
 
 affinity: {}
+
+extraVolumes: []
+# - name: aapm-agent-certs
+#   secret:
+#     secretName: aapm-agent-certs
+
+extraVolumeMounts: []
+# - name: aapm-agent-certs
+#   mountPath: /etc/kron-agent/certs
+#   readOnly: true

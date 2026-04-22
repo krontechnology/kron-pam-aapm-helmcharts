@@ -2,15 +2,15 @@
 apiVersion: autoscaling/v2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: {{ include "aapm-service.fullname" . }}
+  name: {{ include "kron-aapm-service.fullname" . }}
   namespace: {{ .Release.Namespace }}
   labels:
-    {{- include "aapm-service.labels" . | nindent 4 }}
+    {{- include "kron-aapm-service.labels" . | nindent 4 }}
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: {{ include "aapm-service.fullname" . }}
+    name: {{ include "kron-aapm-service.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:

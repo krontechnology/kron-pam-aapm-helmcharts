@@ -54,6 +54,7 @@ clientCredentials:
   secretName: "aapm-client-credentials"
 
 client:
+  enabled: false
   keystoreDir: "/keystore"
   users:
     - label: "USER1"

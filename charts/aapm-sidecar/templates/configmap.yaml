@@ -15,22 +15,21 @@ data:
       - name: SPRING_PROFILES_ACTIVE
         value: aapm-client
       - name: SPRING_CONFIG_ADDITIONAL_LOCATION
-        value: /etc/aapm-config/
+        value: optional:/etc/aapm-config/
       - name: AGENT_SERVICE
-        valueFrom:
-          secretKeyRef:
-            name: aapm-client-secret
-            key: AGENT_SERVICE
+        value: {{ .Values.aapmConnection.agentService | quote }}
       - name: AGENT_PORT
-        valueFrom:
-          secretKeyRef:
-            name: aapm-client-secret
-            key: AGENT_PORT
+        value: {{ .Values.aapmConnection.agentPort | toString | quote }}
       - name: DIRECT_ACCESS_URL
-        valueFrom:
-          secretKeyRef:
-            name: aapm-client-secret
-            key: DIRECT_ACCESS_URL
+        value: {{ .Values.aapmConnection.directAccessUrl | quote }}
+      - name: DISABLE_AGENT_SECURE_CHANNEL
+        value: {{ .Values.aapmConnection.disableSecureChannel | quote }}
+      - name: IGNORE_AGENT_CERTIFICATE
+        value: {{ .Values.aapmConnection.ignoreCertificate | quote }}
+      - name: DISABLE_INTERCEPTOR_SECURE_REQUEST
+        value: {{ .Values.aapmConnection.disableInterceptorSecureRequest | quote }}
+      - name: IGNORE_INTERCEPTOR_CERTIFICATE
+        value: {{ .Values.aapmConnection.ignoreInterceptorCertificate | quote }}
       volumeMounts:
        - name: {{ .Values.volumeMounts.name }}
          mountPath: {{ .Values.volumeMounts.path }}
@@ -39,8 +38,7 @@ data:
          readOnly: true
     volumes:
        - name: {{ .Values.volumeMounts.name }}
-         configMap:
-                name: {{ .Values.configMap.name }}
+         emptyDir: {}
        - name: aapm-client-config
          secret:
            secretName: aapm-client-secret

@@ -86,8 +86,18 @@ spec:
               value: {{ .Values.config.app.grpc.security.dist.certChain | quote }}
             - name: APP_GRPC_SECURITY_DIST_PRIVATE_KEY
               value: {{ .Values.config.app.grpc.security.dist.privateKey | quote }}
+            - name: MACHINE_ID
+              value: {{ .Values.config.machineId | quote }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
+          {{- with .Values.extraVolumeMounts }}
+          volumeMounts:
+            {{- toYaml . | nindent 12 }}
+          {{- end }}
+      {{- with .Values.extraVolumes }}
+      volumes:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:
         {{- toYaml . | nindent 8 }}

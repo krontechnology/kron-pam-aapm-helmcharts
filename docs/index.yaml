@@ -3,34 +3,34 @@ entries:
   aapm-service:
   - apiVersion: v2
     appVersion: 1.16.0
-    created: "2026-04-22T10:46:50.271947+03:00"
+    created: "2026-04-22T16:33:50.36688+03:00"
     description: Aapm Service Helm Chart for Kubernetes
-    digest: 993cf7eaf477d1a7b68b67c3d2c9f87a8c8e2a74f26b60432278ee43c6c53d5f
+    digest: 2e9f81ee764736119a1c66de200307792ead853c3f3c69a47535c7857e841150
     name: aapm-service
     type: application
     urls:
-    - https://krontechnology.github.io/kron-pam-aapm-helmcharts/aapm-service-1.2.1.tgz
-    version: 1.2.1
+    - https://krontechnology.github.io/kron-pam-aapm-helmcharts/aapm-service-1.2.2.tgz
+    version: 1.2.2
   kron-aapm-agent:
   - apiVersion: v2
     appVersion: 1.8.3
-    created: "2026-04-22T10:46:50.272169+03:00"
+    created: "2026-04-22T16:33:50.367265+03:00"
     description: Kron Aapm Agent for Kubernetes
-    digest: 63cd7189cee7a21f2d9ed2e02c149cd24f2f6cf95a5cc3e2a7f0610d4802dc5a
+    digest: fc048e2a7dae94534e94978d0b0847896e45da4c33cb89ae5dee8bcfc30249af
     name: kron-aapm-agent
     type: application
     urls:
-    - https://krontechnology.github.io/kron-pam-aapm-helmcharts/kron-aapm-agent-1.2.1.tgz
-    version: 1.2.1
+    - https://krontechnology.github.io/kron-pam-aapm-helmcharts/kron-aapm-agent-1.2.2.tgz
+    version: 1.2.2
   kron-aapm-sidecar:
   - apiVersion: v2
     appVersion: 1.1.0
-    created: "2026-04-22T10:46:50.272368+03:00"
+    created: "2026-04-22T16:33:50.367608+03:00"
     description: Kron Aapm sidecar for Kubernetes
-    digest: 215636eef4f0aae259374f8abfd9b655a99be916608684bd1bfd9ad54e4e4fab
+    digest: d5cf7be002896fcaa81c7295880da70091c4dc99befa156c96189dff6c24037f
     name: kron-aapm-sidecar
     type: application
     urls:
-    - https://krontechnology.github.io/kron-pam-aapm-helmcharts/kron-aapm-sidecar-1.2.1.tgz
-    version: 1.2.1
-generated: "2026-04-22T10:46:50.271633+03:00"
+    - https://krontechnology.github.io/kron-pam-aapm-helmcharts/kron-aapm-sidecar-1.2.2.tgz
+    version: 1.2.2
+generated: "2026-04-22T16:33:50.36656+03:00"
