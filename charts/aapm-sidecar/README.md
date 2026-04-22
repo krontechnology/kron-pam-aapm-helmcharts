@@ -48,7 +48,7 @@ kubectl label namespace <target_namespace> aapm-injection=enabled
 
 ### Step 2 — Create required resources in the target namespace
 
-The injected sidecar reads its configuration from resources that must exist in the **target namespace** (the namespace where your application pods run).
+The injected sidecar reads its account definitions from `aapm-client-secret` in the **target namespace**. This secret must be created manually for each namespace where injection is needed.
 
 **Create `aapm-client-secret`:**
 
@@ -70,9 +70,6 @@ EOF
 
 kubectl create secret generic aapm-client-secret \
     --namespace <target_namespace> \
-    --from-literal=AGENT_SERVICE="kron-aapm-agent.<agent_namespace>.svc.cluster.local" \
-    --from-literal=AGENT_PORT="8080" \
-    --from-literal=DIRECT_ACCESS_URL="https://<your-pam-url>" \
     --from-file=application-aapm-client.yml=/tmp/application-aapm-client.yml
 ```
 
@@ -85,6 +82,8 @@ kubectl create configmap aapm-configmap \
 ```
 
 ### Step 3 — Install the chart
+
+Connection parameters (agent address, port, certificates) are set once at chart level and injected into all sidecars automatically.
 
 ```bash
 helm install kron-aapm-sidecar kron-pam/kron-aapm-sidecar \
@@ -104,7 +103,7 @@ helm install kron-aapm-sidecar kron-pam/kron-aapm-sidecar \
 
 ## Verify Injection
 
-Deploy a test pod in the target namespace and check the files:
+Deploy a test pod in the target namespace and check the written files:
 
 ```bash
 kubectl run test-pod --image=nginx --namespace <target_namespace>
@@ -114,6 +113,14 @@ kubectl exec test-pod -c aapm-client -n <target_namespace> -- ls -la /keystore
 
 # Read a secret file
 kubectl exec test-pod -c aapm-client -n <target_namespace> -- cat /keystore/account-1.env
+```
+
+Expected output in `/keystore`:
+
+```
+account-1.env   ← secret_name=password_value
+account-2.env
+config          ← export secret_name=password_value
 ```
 
 ---
@@ -133,7 +140,7 @@ The `kron-aapm-agent` deployment already sets this annotation automatically.
 
 ## Secret Output Format
 
-For each entry in `aapmClient.secrets`, the sidecar writes two files inside the shared `/keystore` volume:
+For each entry in `aapm-client-secret`, the sidecar writes two files inside the shared `/keystore` volume:
 
 | File | Content |
 |---|---|
@@ -156,12 +163,7 @@ The main application container can source `/keystore/config` or read individual 
 | `aapmConnection.ignoreInterceptorCertificate` | Skip certificate verification for interceptor | `false` |
 | `aapmConnection.disableSecureChannel` | Disable secure gRPC channel to agent | `false` |
 | `aapmConnection.disableInterceptorSecureRequest` | Disable HTTPS for interceptor requests | `false` |
-| `aapmClient.pollIntervalMs` | How often (ms) the sidecar fetches secrets | `30000` |
-| `aapmClient.secrets` | List of secret accounts to fetch (written to `aapm-client-secret` in injector namespace) | `[]` |
-| `aapmClient.secrets[].userLabel` | Label used as the output filename in `/keystore` | required |
-| `aapmClient.secrets[].secret` | Account name in the AAPM Agent | required |
-| `aapmClient.secrets[].token` | Auth token for the account | required |
-| `aapmClient.secrets[].accPath` | Account path in the PAM hierarchy | required |
+| `aapmClient.pollIntervalMs` | Default poll interval (ms) — can be overridden per namespace in `aapm-client-secret` | `30000` |
 | `image.repository` | Webhook injector image | `krontechnology/aapm-sidecar-injector` |
 | `image.tag` | Webhook injector image tag | `"1.2.1"` |
 | `sidecarImage.repository` | Sidecar (aapm-client) image | `krontechnology/aapm-client` |
@@ -174,7 +176,7 @@ The main application container can source `/keystore/config` or read individual 
 
 ## Upgrade
 
-After updating `aapm-client-secret` in the target namespace, restart the injector and recreate pods to pick up changes:
+To update connection parameters, upgrade the chart and restart the injector. Running pods must be recreated to pick up the new sidecar config:
 
 ```bash
 helm upgrade kron-aapm-sidecar kron-pam/kron-aapm-sidecar \
@@ -188,6 +190,8 @@ helm upgrade kron-aapm-sidecar kron-pam/kron-aapm-sidecar \
 
 kubectl rollout restart deployment/kron-aapm-sidecar -n <namespace_name>
 ```
+
+To update account definitions for a namespace, update `aapm-client-secret` in the target namespace — no chart upgrade needed.
 
 ## Uninstall
 
