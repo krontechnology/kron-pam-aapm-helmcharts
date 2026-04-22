@@ -82,6 +82,10 @@ spec:
               value: {{ .Values.config.app.grpc.security.protocols | quote }}
             - name: GRPC_TLS_CIPHERS
               value: {{ .Values.config.app.grpc.security.ciphers | quote }}
+            - name: APP_GRPC_SECURITY_DIST_CERT_CHAIN
+              value: {{ .Values.config.app.grpc.security.dist.certChain | quote }}
+            - name: APP_GRPC_SECURITY_DIST_PRIVATE_KEY
+              value: {{ .Values.config.app.grpc.security.dist.privateKey | quote }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}
