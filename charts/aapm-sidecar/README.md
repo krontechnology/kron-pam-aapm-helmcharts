@@ -73,14 +73,6 @@ kubectl create secret generic aapm-client-secret \
     --from-file=application-aapm-client.yml=/tmp/application-aapm-client.yml
 ```
 
-**Create `aapm-configmap`:**
-
-```bash
-kubectl create configmap aapm-configmap \
-    --namespace <target_namespace> \
-    --from-literal=aapm.conf="# AAPM client configuration"
-```
-
 ### Step 3 — Install the chart
 
 Connection parameters (agent address, port, certificates) are set once at chart level and injected into all sidecars automatically.

@@ -2,35 +2,35 @@ apiVersion: v1
 entries:
   aapm-service:
   - apiVersion: v2
-    appVersion: 1.16.0
-    created: "2026-04-22T16:46:42.13304+03:00"
+    appVersion: 1.1.2
+    created: "2026-04-22T18:48:51.436911+03:00"
     description: Aapm Service Helm Chart for Kubernetes
-    digest: 5a2acd823e9faa56478f4ebad0ff08b6c1d756d1a5fdb3bf14365ad96f810c68
+    digest: 0cfdd95ca9741dd0a18268e0f84ee021d261e41c23a38caa37e5ed19e3c014a4
     name: aapm-service
     type: application
     urls:
-    - https://krontechnology.github.io/kron-pam-aapm-helmcharts/aapm-service-1.2.3.tgz
-    version: 1.2.3
+    - https://krontechnology.github.io/kron-pam-aapm-helmcharts/aapm-service-1.2.4.tgz
+    version: 1.2.4
   kron-aapm-agent:
   - apiVersion: v2
     appVersion: 1.8.3
-    created: "2026-04-22T16:46:42.133384+03:00"
+    created: "2026-04-22T18:48:51.437272+03:00"
     description: Kron Aapm Agent for Kubernetes
-    digest: 05cdcbb3a4f341331d968c622e846c84e6972cf8b1f0f9b2c35cc084408f8e68
+    digest: 4f8621daa8ce42c5a749d83e90d69cfec8fd0d28962bb6166da2681707205e7c
     name: kron-aapm-agent
     type: application
     urls:
-    - https://krontechnology.github.io/kron-pam-aapm-helmcharts/kron-aapm-agent-1.2.3.tgz
-    version: 1.2.3
+    - https://krontechnology.github.io/kron-pam-aapm-helmcharts/kron-aapm-agent-1.2.4.tgz
+    version: 1.2.4
   kron-aapm-sidecar:
   - apiVersion: v2
-    appVersion: 1.1.0
-    created: "2026-04-22T16:46:42.133691+03:00"
+    appVersion: 1.2.1
+    created: "2026-04-22T18:48:51.437605+03:00"
     description: Kron Aapm sidecar for Kubernetes
-    digest: 85e1a9947d9d9bca008fd5e1d8de5c8bb864be1bf01b566a9e5397c2eddd9064
+    digest: ba8c109ff15952755e64683fac9014249941fb0953a92d850ed7577c79c14648
     name: kron-aapm-sidecar
     type: application
     urls:
-    - https://krontechnology.github.io/kron-pam-aapm-helmcharts/kron-aapm-sidecar-1.2.3.tgz
-    version: 1.2.3
-generated: "2026-04-22T16:46:42.132711+03:00"
+    - https://krontechnology.github.io/kron-pam-aapm-helmcharts/kron-aapm-sidecar-1.2.4.tgz
+    version: 1.2.4
+generated: "2026-04-22T18:48:51.43601+03:00"

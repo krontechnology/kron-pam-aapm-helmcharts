@@ -40,9 +40,6 @@ namespace:
   name: ""
   create: false
 
-configMap:
-  name: "aapm-configmap"
-
 # AAPM agent connection parameters — stored in a K8s Secret and injected as env vars.
 aapmConnection:
   agentService: ""       # e.g. "aapm-agent.aapm.svc.cluster.local"
@@ -57,12 +54,6 @@ aapmConnection:
 # Account definitions are configured per target namespace via aapm-client-secret.
 aapmClient:
   pollIntervalMs: 30000
-
-# Content mounted into the AAPM sidecar container at /keystore/aapm.conf.
-aapmConfig:
-  content: |
-    # AAPM client configuration
-    # Add connection and authentication settings here
 
 podAnnotations: {}
 

@@ -1,6 +1,6 @@
 apiVersion: v2
-appVersion: 1.1.0
+appVersion: 1.2.1
 description: Kron Aapm sidecar for Kubernetes
 name: kron-aapm-sidecar
 type: application
-version: 1.2.3
+version: 1.2.4
