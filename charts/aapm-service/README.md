@@ -12,7 +12,7 @@ Deploys the Kron AAPM Service on Kubernetes. The service acts as a vault proxy b
 ## Add the Helm Repository
 
 ```bash
-helm repo add kron-pam <repo-url>
+helm repo add kron-pam https://krontechnology.github.io/kron-pam-aapm-helmcharts/
 helm repo update
 ```
 
@@ -64,18 +64,42 @@ helm install aapm-service kron-pam/aapm-service \
 
 ---
 
+### Option 3 — With Vault Allowed Accounts
+
+Restricts the `/vault` endpoint to a predefined list of account name + path pairs. Requests that do not match any entry are rejected with `403 Forbidden`.
+
+```bash
+helm install aapm-service kron-pam/aapm-service \
+    --namespace <namespace_name> \
+    --create-namespace \
+    --set agent.service="kron-aapm-agent.<namespace_name>.svc.cluster.local" \
+    --set agent.port="8080" \
+    --set pam.url="<your-pam-url>" \
+    --set "vault.allowedAccounts[0].accountName=my_account" \
+    --set "vault.allowedAccounts[0].accountPath=/my_path"
+```
+
+Or via `values.yaml`:
+
+```yaml
+vault:
+  allowedAccounts:
+    - accountName: my_account
+      accountPath: /my_path
+    - accountName: other_account
+      accountPath: /other_path
+```
+
+> If `vault.allowedAccounts` is empty (default), all `/vault` requests are blocked.
+
+---
+
 ## Test the Installation
 
 Forward the service port and verify it is running:
 
 ```bash
 kubectl port-forward svc/aapm-service 8443:8443 -n <namespace_name>
-```
-
-Health check:
-```bash
-curl -k http://localhost:8443/vault
-# Expected: Debug mode enabled!
 ```
 
 Fetch a password:
@@ -107,10 +131,15 @@ curl -k -X POST http://localhost:8443/vault \
 | `tls.password` | Keystore password | `""` |
 | `tls.keyAlias` | Key alias in the keystore | `""` |
 | `tls.secretName` | Kubernetes secret containing the keystore | `"grpc-tls-secret"` |
+| `vault.allowedAccounts` | List of permitted `accountName` + `accountPath` pairs for `/vault` requests | `[]` |
+| `client.enabled` | Enable AAPM client credential injection | `false` |
+| `client.keystoreDir` | Mount path for client keystores inside the container | `"/keystore"` |
+| `client.users` | List of client users with `label`, `accPath`, `secretKey`, `tokenKey` | see values.yaml |
+| `clientCredentials.secretName` | Kubernetes secret holding client `secret` and `token` values | `"aapm-client-credentials"` |
 | `service.type` | Kubernetes service type | `ClusterIP` |
 | `service.port` | Service port | `8443` |
 | `replicaCount` | Number of replicas | `1` |
-| `image.tag` | Image tag override | `"1.1.2"` |
+| `image.tag` | Image tag override | `"1.1.3"` |
 
 ## Upgrade
 

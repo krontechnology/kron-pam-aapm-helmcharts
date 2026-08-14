@@ -11,7 +11,7 @@ Deploys the Kron AAPM Agent on Kubernetes.
 ## Add the Helm Repository
 
 ```bash
-helm repo add kron-pam <repo-url>
+helm repo add kron-pam https://krontechnology.github.io/kron-pam-aapm-helmcharts/
 helm repo update
 ```
 
@@ -137,7 +137,7 @@ openssl pkcs12 -in server.p12 -nocerts -nodes -out server.pem
 | `extraVolumes` | Additional volumes to attach to the pod | `[]` |
 | `extraVolumeMounts` | Additional volume mounts for the container | `[]` |
 | `replicaCount` | Number of replicas | `1` |
-| `image.tag` | Image tag override | `"1.8.3"` |
+| `image.tag` | Image tag override | `"1.8.4"` |
 | `service.type` | Kubernetes service type | `NodePort` |
 | `service.port` | Service port | `8080` |
 

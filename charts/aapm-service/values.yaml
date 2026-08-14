@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: krontechnology/aapm-service
   pullPolicy: IfNotPresent
-  tag: "1.1.2"
+  tag: "1.1.3"
 
 imagePullSecrets: []
 nameOverride: ""

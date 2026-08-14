@@ -10,14 +10,13 @@
 ```
 2. Move packages to /docs folder
 ```shell
-  mv kron-aapm-agent-1.1.1.tgz docs
-  mv kron-aapm-service-0.1.0.tgz docs
-  mv kron-aapm-sidecar-1.1.1.tgz docs 
+  mv kron-aapm-agent-*.tgz docs
+  mv aapm-service-*.tgz docs
+  mv kron-aapm-sidecar-*.tgz docs
 ```
 3. Create index
 ```shell
-cd docs
-helm repo index . --url https://krontechnology.github.io/kron-pam-aapm-helmcharts/
+helm repo index docs/ --url https://krontechnology.github.io/kron-pam-aapm-helmcharts/
 ```
 
 ### Adding New Chart
