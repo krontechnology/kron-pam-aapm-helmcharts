@@ -68,6 +68,11 @@ service:
   targetPort: 8443
   name: aapm-service
 
+vault:
+  allowedAccounts: []
+  # - accountName: "my_account"
+  #   accountPath: "/my_path"
+
 access:
   key: default
 

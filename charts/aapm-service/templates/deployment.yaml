@@ -80,6 +80,12 @@ spec:
                   key: {{ $user.tokenKey }}
             {{- end }}
             {{- end }}
+            {{- range $i, $account := .Values.vault.allowedAccounts }}
+            - name: AAPM_VAULT_ALLOWED_ACCOUNTS_{{ $i }}_ACCOUNT_NAME
+              value: {{ $account.accountName | quote }}
+            - name: AAPM_VAULT_ALLOWED_ACCOUNTS_{{ $i }}_ACCOUNT_PATH
+              value: {{ $account.accountPath | quote }}
+            {{- end }}
           ports:
             - name: http
               containerPort: {{ .Values.service.targetPort }}
