@@ -14,7 +14,7 @@ sidecarImage:
   repository: krontechnology/aapm-client
   pullPolicy: IfNotPresent
   # Overrides the image tag whose default is the chart appVersion.
-  tag: "1.2.1"
+  tag: "1.1.3"
   name: "aapm-client"
 
 imagePullSecrets: []
