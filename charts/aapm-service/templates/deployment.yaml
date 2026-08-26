@@ -80,6 +80,19 @@ spec:
                   key: {{ $user.tokenKey }}
             {{- end }}
             {{- end }}
+            - name: VAULT_API_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.vault.apiKey.secretName }}
+                  key: {{ .Values.vault.apiKey.secretKey }}
+            - name: SSL_CLIENT_AUTH
+              value: {{ .Values.tls.clientAuth | quote }}
+            {{- if .Values.tls.enabled }}
+            - name: TRUST_STORE_PATH
+              value: {{ .Values.tls.trustStorePath | quote }}
+            - name: TRUST_STORE_PASSWORD
+              value: {{ .Values.tls.trustStorePassword | quote }}
+            {{- end }}
             {{- range $i, $account := .Values.vault.allowedAccounts }}
             - name: AAPM_VAULT_ALLOWED_ACCOUNTS_{{ $i }}_ACCOUNT_NAME
               value: {{ $account.accountName | quote }}
@@ -95,14 +108,20 @@ spec:
           {{- if .Values.tls.enabled }}
           volumeMounts:
             - name: tls-keystore
-              mountPath: /etc/tls
+              mountPath: /etc/tls/keystore.p12
               subPath: keystore.p12
+            - name: tls-truststore
+              mountPath: /etc/tls/truststore.p12
+              subPath: truststore.p12
           {{- end }}
       {{- if .Values.tls.enabled }}
       volumes:
         - name: tls-keystore
           secret:
             secretName: {{ .Values.tls.secretName }}
+        - name: tls-truststore
+          secret:
+            secretName: {{ .Values.tls.trustStoreSecretName }}
       {{- end }}
       {{- with .Values.nodeSelector }}
       nodeSelector:

@@ -33,6 +33,12 @@ tls:
   password: "<your_password>"
   secretName: "grpc-tls-secret"
   keyAlias: "<your_alias>"
+  # mTLS client certificate verification. Defaults to need.
+  # Set clientAuth: none to disable client cert requirement.
+  clientAuth: "need"
+  trustStorePath: "/etc/tls/truststore.p12"
+  trustStorePassword: ""
+  trustStoreSecretName: "grpc-truststore-secret"
 
 agent:
   service: "<your_agent_url>"
@@ -72,6 +78,11 @@ vault:
   allowedAccounts: []
   # - accountName: "my_account"
   #   accountPath: "/my_path"
+  # API key for /vault endpoint authentication (X-Vault-Api-Key header).
+  # Must reference a pre-existing Kubernetes Secret.
+  apiKey:
+    secretName: "aapm-vault-secret"
+    secretKey: "api-key"
 
 access:
   key: default
