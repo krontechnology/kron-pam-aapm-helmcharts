@@ -3,7 +3,7 @@ replicaCount: 1
 image:
   repository: krontechnology/aapm-service
   pullPolicy: IfNotPresent
-  tag: "1.1.3"
+  tag: "1.2.2"
 
 imagePullSecrets: []
 nameOverride: ""
@@ -63,10 +63,21 @@ client:
   enabled: false
   keystoreDir: "/keystore"
   users:
+    # VAULT example (static account via gRPC — default):
     - label: "USER1"
+      type: "VAULT"          # VAULT | EPHEMERAL_BASE  (default: VAULT)
       accPath: "/"
-      secretKey: "user1-secret"
-      tokenKey: "user1-token"
+      secretKey: "user1-secret"   # K8s Secret key for account name
+      tokenKey: "user1-token"     # K8s Secret key for token
+    # EPHEMERAL_BASE example (JIT account via PAM REST):
+    # - label: "USER1-JIT"
+    #   type: "EPHEMERAL_BASE"
+    #   sapmDbId: "12345"          # base account DB-ID in PAM
+    #   ttlMinutes: 60             # credential TTL; auto-renewed at 90 % expiry
+    #   tokenKey: "user1-token"    # K8s Secret key for app-token
+    #   # optional — for gRPC fallback when REST returns only dbId:
+    #   accPath: "/Root/EphemeralAccounts"
+    #   secretKey: "user1-secret"
 
 service:
   type: ClusterIP

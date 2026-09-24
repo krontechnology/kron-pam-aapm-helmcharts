@@ -66,6 +66,30 @@ spec:
             {{- range $i, $user := .Values.client.users }}
             - name: AAPM_CLIENT_SECRETS_{{ $i }}_USER_LABEL
               value: {{ $user.label | quote }}
+            - name: AAPM_CLIENT_SECRETS_{{ $i }}_TYPE
+              value: {{ $user.type | default "VAULT" | quote }}
+            {{- if eq ($user.type | default "VAULT") "EPHEMERAL_BASE" }}
+            - name: AAPM_CLIENT_SECRETS_{{ $i }}_SAPM_DB_ID
+              value: {{ $user.sapmDbId | quote }}
+            - name: AAPM_CLIENT_SECRETS_{{ $i }}_TTL_MINUTES
+              value: {{ $user.ttlMinutes | default 60 | toString | quote }}
+            - name: AAPM_CLIENT_SECRETS_{{ $i }}_TOKEN
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $.Values.clientCredentials.secretName }}
+                  key: {{ $user.tokenKey }}
+            {{- if $user.accPath }}
+            - name: AAPM_CLIENT_SECRETS_{{ $i }}_ACC_PATH
+              value: {{ $user.accPath | quote }}
+            {{- end }}
+            {{- if $user.secretKey }}
+            - name: AAPM_CLIENT_SECRETS_{{ $i }}_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $.Values.clientCredentials.secretName }}
+                  key: {{ $user.secretKey }}
+            {{- end }}
+            {{- else }}
             - name: AAPM_CLIENT_SECRETS_{{ $i }}_ACC_PATH
               value: {{ $user.accPath | quote }}
             - name: AAPM_CLIENT_SECRETS_{{ $i }}_SECRET
@@ -78,6 +102,7 @@ spec:
                 secretKeyRef:
                   name: {{ $.Values.clientCredentials.secretName }}
                   key: {{ $user.tokenKey }}
+            {{- end }}
             {{- end }}
             {{- end }}
             - name: VAULT_API_KEY

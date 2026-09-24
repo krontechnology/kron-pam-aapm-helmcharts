@@ -4,6 +4,6 @@ description: Aapm Service Helm Chart for Kubernetes
 
 type: application
 
-version: 1.2.6
+version: 1.2.7
 
-appVersion: "1.1.3"
+appVersion: "1.2.2"
