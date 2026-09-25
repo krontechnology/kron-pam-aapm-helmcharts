@@ -3,7 +3,7 @@ entries:
   aapm-service:
   - apiVersion: v2
     appVersion: 1.2.2
-    created: "2026-09-25T14:48:49.511287+03:00"
+    created: "2026-09-25T14:49:29.851712+03:00"
     description: Aapm Service Helm Chart for Kubernetes
     digest: 4b6eef6e2b677641661ff84faa9f36f89f1b1ea81a978ebd3bdfa1b7f80da5fd
     name: aapm-service
@@ -54,7 +54,7 @@ entries:
   kron-aapm-agent:
   - apiVersion: v2
     appVersion: 1.8.5
-    created: "2026-09-25T14:48:49.51543+03:00"
+    created: "2026-09-25T14:49:29.852226+03:00"
     description: Kron Aapm Agent for Kubernetes
     digest: 5f1d2c7ea2c08bf1c5a4ff4723ed4e45564935a9a3949b3e8152ee68408ebf89
     name: kron-aapm-agent
@@ -85,7 +85,7 @@ entries:
   kron-aapm-sidecar:
   - apiVersion: v2
     appVersion: 1.2.2
-    created: "2026-09-25T14:48:49.51805+03:00"
+    created: "2026-09-25T14:49:29.853149+03:00"
     description: Kron Aapm sidecar for Kubernetes
     digest: 57f8e66b1178ae7b46918872b138f6861ba303703060c4477f178abceed00703
     name: kron-aapm-sidecar
@@ -113,4 +113,4 @@ entries:
     urls:
     - kron-aapm-sidecar-1.2.4.tgz
     version: 1.2.4
-generated: "2026-09-25T14:48:49.50864+03:00"
+generated: "2026-09-25T14:49:29.851093+03:00"
