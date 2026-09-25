@@ -72,12 +72,10 @@ client:
     # EPHEMERAL_BASE example (JIT account via PAM REST):
     # - label: "USER1-JIT"
     #   type: "EPHEMERAL_BASE"
-    #   sapmDbId: "12345"          # base account DB-ID in PAM
-    #   ttlMinutes: 60             # credential TTL; auto-renewed at 90 % expiry
-    #   tokenKey: "user1-token"    # K8s Secret key for app-token
-    #   # optional — for gRPC fallback when REST returns only dbId:
-    #   accPath: "/Root/EphemeralAccounts"
-    #   secretKey: "user1-secret"
+    #   sapmAccountName: "myBaseAccount"   # base account name in PAM
+    #   sapmAccountPath: "/Root/Accounts"  # base account path in PAM
+    #   ttlMinutes: 60                     # credential TTL; auto-renewed at 90 % expiry
+    #   tokenKey: "user1-token"            # K8s Secret key for app-token
 
 service:
   type: ClusterIP
