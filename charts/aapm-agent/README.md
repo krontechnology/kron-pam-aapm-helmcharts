@@ -17,9 +17,9 @@ helm repo update
 
 ## Installation
 
-### Option 1 — Classpath Certificates (default)
+### Option 1 — Runtime-generated Certificates (default)
 
-The image ships with built-in certificates. No secret setup required.
+Starting from v1.8.5, the agent automatically generates certificates at runtime under `/app/cert/`. No certificate secret or extra configuration is required.
 
 ```bash
 helm install kron-aapm-agent kron-pam/kron-aapm-agent \
@@ -28,6 +28,8 @@ helm install kron-aapm-agent kron-pam/kron-aapm-agent \
     --set secrets.installToken="<your-install-token>" \
     --set secrets.address="<your-pam-address>"
 ```
+
+> **Breaking change from v1.8.4:** The default `certChain` and `privateKey` paths changed from `classpath:cert/...` to `file:/app/cert/...`. If you were using a custom `values.yaml` that overrode these with `classpath:` URIs, update them to `file:` URIs pointing to your mounted volume.
 
 ---
 
@@ -131,13 +133,13 @@ openssl pkcs12 -in server.p12 -nocerts -nodes -out server.pem
 | `config.singleconnect.protocol` | Connection protocol | `"https"` |
 | `config.singleconnect.agentName` | Agent display name | `"default-agent"` |
 | `config.app.grpc.security.enabled` | Enable gRPC TLS | `true` |
-| `config.app.grpc.security.dist.certChain` | Path to certificate chain (`classpath:` or `file:`) | `"classpath:cert/server.crt"` |
-| `config.app.grpc.security.dist.privateKey` | Path to private key (`classpath:` or `file:`) | `"classpath:cert/server.pem"` |
+| `config.app.grpc.security.dist.certChain` | Path to certificate chain (`file:` URI) | `"file:/app/cert/server.crt"` |
+| `config.app.grpc.security.dist.privateKey` | Path to private key (`file:` URI) | `"file:/app/cert/server.pem"` |
 | `config.grpc.port` | gRPC server port | `8080` |
 | `extraVolumes` | Additional volumes to attach to the pod | `[]` |
 | `extraVolumeMounts` | Additional volume mounts for the container | `[]` |
 | `replicaCount` | Number of replicas | `1` |
-| `image.tag` | Image tag override | `"1.8.4"` |
+| `image.tag` | Image tag override | `"1.8.5"` |
 | `service.type` | Kubernetes service type | `NodePort` |
 | `service.port` | Service port | `8080` |
 

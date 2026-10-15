@@ -59,8 +59,8 @@ config:
         protocols: "TLSv1.2,TLSv1.3"
         ciphers: "TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256"
         dist:
-          certChain: "classpath:cert/server.crt"
-          privateKey: "classpath:cert/server.pem"
+          certChain: "file:/app/cert/server.crt"
+          privateKey: "file:/app/cert/server.pem"
 
 container:
   port: 8080
